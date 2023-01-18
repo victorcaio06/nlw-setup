@@ -1,9 +1,17 @@
 import Fastify from "fastify";
+import {PrismaClient} from '@prisma/client';
+import cors from "@fastify/cors";
 
 const app = Fastify({logger: true});
 
+const prisma = new PrismaClient();
+
+app.register(cors);
+
 app.get('/', async (request, reply) => {
-  return 'helloWorld';
+  const habits = await prisma.habit.findMany();
+
+  reply.send(habits);
 });
 
 const start = async (): Promise<void> => {
