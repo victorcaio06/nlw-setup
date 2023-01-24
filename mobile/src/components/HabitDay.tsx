@@ -17,6 +17,7 @@ export function HabitDay() {
           width: DaySize, height: DaySize
         }
       }
+      activeOpacity={0.5}
     />
 
       
