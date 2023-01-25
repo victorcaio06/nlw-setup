@@ -2,6 +2,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Plus, X } from "phosphor-react";
 
 import logoImage from '../assets/Logo.svg';
+import { NewHabitForm } from './NewHabitForm';
 
 export function Header() {
   return (
@@ -35,6 +36,8 @@ export function Header() {
             >
               Criar Hábito
             </Dialog.Title>
+
+            <NewHabitForm />
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
