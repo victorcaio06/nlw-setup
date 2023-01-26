@@ -43,7 +43,7 @@ export function New() {
         </Text>
 
         <TextInput
-          className="h-12 pl-4 rounded-lg mt-4 bg-zinc-800 text-white focus:border-2 focus:border-violet-500"
+          className="h-12 pl-4 rounded-lg mt-4 bg-zinc-900 text-white border-2 border-zinc-700 focus:border-violet-500"
           cursorColor={colors.violet[400]}
           placeholder="Ex: Exercícios, estudar, comer..."
           placeholderTextColor={colors.zinc[400]}
