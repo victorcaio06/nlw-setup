@@ -7,6 +7,7 @@ import Logo from "../assets/logo.svg";
 
 export function Header() {
   const { navigate } = useNavigation();
+  
   return (
     <View className="w-full flex-row items-center justify-between">
       <Logo />
