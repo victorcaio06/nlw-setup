@@ -1,10 +1,18 @@
 import { useState } from "react";
-import { ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import colors from "tailwindcss/colors";
-import { Feather } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
 
 import { BackButton } from "../components/BackButton";
 import { Checkbox } from "../components/Checkbox";
+import { api as API } from "../libs/axios";
 
 const availableWeekDays = [
   "Domingo",
@@ -18,6 +26,7 @@ const availableWeekDays = [
 
 export function New() {
   const [weekDays, setWeekDays] = useState<number[]>([]);
+  const [title, setTitle] = useState("");
 
   function handleToggleWeekDays(weekDaysIndex: number) {
     if (weekDays.includes(weekDaysIndex)) {
@@ -29,9 +38,32 @@ export function New() {
     }
   }
 
+  async function handleCreateNewHabit() {
+    try {
+      if (!title.trim()) {
+        Alert.alert("Novo hábito", "Informe o nome do hábito!");
+      } else if (weekDays.length === 0) {
+        Alert.alert("Novo hábito", "Informe a periodicidade!");
+      }
+
+      await API.post("/habits", { title, weekDays });
+
+      setTitle("");
+      setWeekDays([]);
+
+      Alert.alert("Novo hábito", "criado com sucesso!");
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Ops", "Não foi possível criar o novo hábito!");
+    }
+  }
+
   return (
-    <View className="flex-1 bg-background px-8 pt-16" >
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 50 }} >
+    <View className="flex-1 bg-background px-8 pt-16">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 50 }}
+      >
         <BackButton />
 
         <Text className="mt-6 text-white font-extrabold text-3xl">
@@ -47,35 +79,32 @@ export function New() {
           cursorColor={colors.violet[400]}
           placeholder="Ex: Exercícios, estudar, comer..."
           placeholderTextColor={colors.zinc[400]}
+          onChangeText={setTitle}
+          value={title}
         />
 
         <Text className="font-semibold mt-5 mb-3 text-white text-base">
           Qual a recorrência?
         </Text>
 
-        {
-          availableWeekDays.map((weekDay, index) => {
-            return (
-              <Checkbox
-                key={`${weekDay}-${index}`}
-                title={`${weekDay}`}
-                checked={weekDays.includes(index)}
-                onPress={() => handleToggleWeekDays(index)}
-                className="mt-1 mb-1"
-              />
-            );
-          })
-        }
+        {availableWeekDays.map((weekDay, index) => {
+          return (
+            <Checkbox
+              key={`${weekDay}-${index}`}
+              title={`${weekDay}`}
+              checked={weekDays.includes(index)}
+              onPress={() => handleToggleWeekDays(index)}
+              className="mt-1 mb-1"
+            />
+          );
+        })}
 
-        <TouchableOpacity 
+        <TouchableOpacity
           className="w-full h-14 flex-row items-center justify-center bg-violet-500 rounded-md mt-8"
           activeOpacity={0.7}
+          onPress={handleCreateNewHabit}
         >
-          <Feather 
-            name="check"
-            size={20}
-            color={colors.white}
-          />
+          <Feather name="check" size={20} color={colors.white} />
 
           <Text className="font-semibold text-base text-white ml-2">
             Confirmar
