@@ -2,13 +2,15 @@ import { useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
+import { api as API } from "../libs/axios";
 
 import { generateProgressPercentage } from "../utils/generate-progress-percentage";
+
 import { BackButton } from "../components/BackButton";
 import { Checkbox } from "../components/Checkbox";
 import { Loading } from "../components/Loading";
 import { Progressbar } from "../components/Progressbar";
-import { api as API } from "../libs/axios";
+import { HabitsEmpty } from "../components/HabitsEmpty";
 
 interface Params {
   date: string;
@@ -47,8 +49,8 @@ export function Habit() {
       setLoading(true);
       const response = await API.get("/day", { params: { date } });
       setDayInfo(response.data);
-
       setCompletedHabits(response.data.completedHabits);
+      
     } catch (error) {
       console.log(error);
       Alert.alert("Ops", "Error ao contactar o servidor!");
@@ -92,7 +94,7 @@ export function Habit() {
         <Progressbar progress={habitsProgress} />
 
         <View className="mt-6 ">
-          {dayInfo?.possibleHabits &&
+          {dayInfo?.possibleHabits ? (
             dayInfo.possibleHabits.map((habit) => (
               <Checkbox
                 key={habit.id}
@@ -100,7 +102,10 @@ export function Habit() {
                 checked={completedHabits.includes(habit.id)}
                 onPress={() => handleToggleHabits(habit.id)}
               />
-            ))}
+            ))
+          ) : (
+            <HabitsEmpty />
+          )}
         </View>
       </ScrollView>
     </View>
