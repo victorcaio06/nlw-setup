@@ -23,7 +23,7 @@ export function NewHabitForm() {
 
     await API.post("habits", { title, weekDays });
 
-    setTitle('');
+    setTitle("");
     setWeekDays([]);
 
     alert(`Hábito "${title}" criado com sucesso!`);
@@ -74,7 +74,7 @@ export function NewHabitForm() {
             >
               <div
                 className=" h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800
-              group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-500"
+              group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-500 transition-colors duration-500"
               >
                 <Checkbox.Indicator>
                   <Check size={20} className="text-white" />
@@ -90,7 +90,7 @@ export function NewHabitForm() {
       <button
         type="submit"
         className="mt-6 rounded-lg p-4 gap-3 flex items-center justify-center 
-        font-semibold bg-violet-500 hover:bg-violet-700 text-black hover:text-white"
+        font-semibold bg-violet-500 hover:bg-violet-700 text-black hover:text-white transition-colors duration-300"
       >
         <Check size={20} weight="bold" />
         Confirmar

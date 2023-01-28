@@ -72,7 +72,7 @@ export function HabitsList({ date, onCompletedChanged }: HabitsListProps) {
           >
             <div
               className=" h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800
-          group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-500"
+          group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-500 transition-colors duration-500"
             >
               <Checkbox.Indicator>
                 <Check size={20} className="text-white" />
