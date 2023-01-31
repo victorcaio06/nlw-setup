@@ -16,3 +16,25 @@ Projeto desenvolvido durante o evente, no qual consiste em um sistema para criar
 ![Imagem do projeto mobile](./imgs/mobile1.jpg)
 ![Imagem do projeto mobile](./imgs/mobile2.jpg)
 ![Imagem do projeto mobile](./imgs/mobile3.jpg)
+
+
+## Para executar a aplicação WEB
+
+```sh
+npm i
+npm run dev
+```
+
+## Para executar a aplicação MOBILE
+
+```sh
+npm i
+npm run start
+```
+
+## Para executar o Servidor
+
+```sh
+npm i
+npm run start:dev
+```
