@@ -1,13 +1,31 @@
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { api as API } from "../lib/axios";
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { api as API } from '../lib/axios';
 
-import { generateDatesFromYearBeginning } from "../utils/generate-dates-from-year-beginning";
-import { HabitDay } from "./HabitDay";
+import { generateDatesFromYearBeginning } from '../utils/generate-dates-from-year-beginning';
+import { HabitDay } from './HabitDay';
 
-const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
+const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
-const SummaryDates = generateDatesFromYearBeginning();
+let SummaryDates = generateDatesFromYearBeginning();
+
+if (SummaryDates.length > 200) {
+  let half = Math.floor(SummaryDates.length / 2);
+
+  let auxArray = SummaryDates.slice(half);
+
+  SummaryDates = auxArray;
+  // console.log(auxArray);
+
+  // console.log(auxArray.length);
+
+  // let array = [1, 2, 3, 4, 5, 6, 7, 8];
+  // let halfAux = Math.floor(array.length / 2);
+  // let secondHalf = array.slice(halfAux);
+
+  // console.log(array);
+  // console.log(secondHalf);
+}
 
 const minimumSummaryDatesSize = 18 * 7;
 
@@ -24,7 +42,7 @@ export function SummaryTable() {
   const [summary, setSummary] = useState<Summary>([]);
 
   useEffect(() => {
-    API.get("summary").then((response) => {
+    API.get('summary').then((response) => {
       setSummary(response.data);
     });
   }, []);
@@ -47,7 +65,7 @@ export function SummaryTable() {
         {summary.length > 0 &&
           SummaryDates.map((date) => {
             const dayInSummary = summary.find((day) => {
-              return dayjs(date).isSame(day.date, "day");
+              return dayjs(date).isSame(day.date, 'day');
             });
             return (
               <HabitDay
@@ -60,7 +78,7 @@ export function SummaryTable() {
           })}
 
         {amountOfDaysToFill > 0 &&
-          Array.from({ length: amountOfDaysToFill }).map((_, i) => {
+          Array.from({ length: 10 }).map((_, i) => {
             return (
               <div
                 key={i}
